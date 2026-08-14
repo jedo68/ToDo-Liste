@@ -1,0 +1,30 @@
+:root{
+  --font-display:"Artifakt Legend","Artifakt Legend Book",Archivo,"Helvetica Neue",Arial,sans-serif;
+  --font-body:"Artifakt Element","Artifakt Element Book",Barlow,"Helvetica Neue",Arial,sans-serif;
+  --font-mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+
+  /* px values are the PPTX point sizes rendered on a 1280x720 slide (1pt = 1.3333px) */
+  --text-cover:72px;      /* 54pt  cover title */
+  --text-hero:71px;       /* 53pt  full-bleed cover title */
+  --text-display:37px;    /* 28pt  slide + section title */
+  --text-xl:32px;         /* 24pt  one-column title */
+  --text-lg:27px;         /* 20pt  stat numeral */
+  --text-md:21px;         /* 16pt  subtitle, presenter line */
+  --text-base:16px;       /* 12pt  body copy, bullets */
+  --text-sm:19px;         /* 14pt  column body */
+  --text-xs:11px;         /* 8pt   stat caption, contact bar */
+  --text-2xs:10px;        /* 7.5pt award strip */
+  --text-stat:107px;      /* 80pt  oversized xx% numeral */
+
+  --weight-regular:400;
+  --weight-medium:500;
+  --weight-bold:700;
+
+  --leading-tight:1.0;    /* PPTX lnSpc is 100% everywhere */
+  --leading-snug:1.2;
+  --leading-body:1.45;
+
+  --tracking-tight:-0.01em;
+  --tracking-normal:0;
+  --tracking-wide:0.04em;
+}

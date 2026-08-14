@@ -1,0 +1,16 @@
+/* Contelos uses Autodesk's proprietary Artifakt family (Artifakt Legend for display,
+   Artifakt Element for text). Those binaries are not redistributable and were not
+   supplied with the PPTX, so the system declares them first and falls back to the
+   two Google faces the template itself already carries: Archivo and Barlow.
+   Drop real Artifakt woff2 files into assets/fonts/ and uncomment the @font-face
+   blocks below to make the system pixel-true. */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Barlow:wght@300;400;500;600;700&display=swap");
+
+/*
+@font-face{font-family:"Artifakt Legend";src:url("../assets/fonts/ArtifaktLegend-Book.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Artifakt Legend";src:url("../assets/fonts/ArtifaktLegend-Medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Artifakt Legend";src:url("../assets/fonts/ArtifaktLegend-Bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Artifakt Element";src:url("../assets/fonts/ArtifaktElement-Book.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Artifakt Element";src:url("../assets/fonts/ArtifaktElement-Medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Artifakt Element";src:url("../assets/fonts/ArtifaktElement-Bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+*/

@@ -1,0 +1,52 @@
+:root{
+  /* --- Base palette (values lifted verbatim from Contelos_ppt_Vorlage_2023) --- */
+  --blue-900:#00246A;
+  --blue-800:#003BA3;   /* theme accent1 */
+  --blue-700:#003DA5;   /* headline / cover title blue */
+  --blue-600:#00499F;   /* section + slide title blue, hyperlink */
+  --blue-400:#4A8CFF;   /* oversized statistic numerals */
+  --blue-100:#DDE3EF;   /* hairline rules, card strokes */
+  --blue-50:#F4F6FA;    /* stat-card fill */
+
+  --red-600:#CC0000;    /* the Contelos rule + logo cube */
+  --red-700:#A30000;    /* pressed state */
+
+  --orange-500:#E75012; /* visited link, sparing highlight */
+
+  --grey-900:#000000;
+  --grey-800:#1A1A1A;
+  --grey-500:#555555;   /* the only body-grey in the template */
+  --grey-300:#B3B3B3;
+  --grey-100:#EFEFEF;   /* theme lt2, neutral panel */
+  --white:#FFFFFF;
+
+  /* --- Semantic aliases --- */
+  --text-heading:var(--blue-600);
+  --text-title:var(--blue-700);
+  --text-body:var(--grey-800);
+  --text-muted:var(--grey-500);
+  --text-inverse:var(--white);
+  --text-link:var(--blue-600);
+  --text-link-visited:var(--orange-500);
+
+  --surface-page:var(--white);
+  --surface-card:var(--blue-50);
+  --surface-neutral:var(--grey-100);
+  --surface-inverse:var(--blue-700);
+
+  --border-hairline:var(--blue-100);
+  --border-card:var(--blue-100);
+  --border-strong:var(--grey-300);
+
+  --accent-rule:var(--red-600);
+  --accent-stat:var(--blue-400);
+
+  --action-primary:var(--blue-700);
+  --action-primary-hover:var(--blue-800);
+  --action-primary-active:var(--blue-900);
+  --action-danger:var(--red-600);
+  --action-danger-hover:var(--red-700);
+
+  /* 70% white veil the template lays over every full-bleed cover render */
+  --overlay-cover:rgba(255,255,255,.7);
+}

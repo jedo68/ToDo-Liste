@@ -1,0 +1,16 @@
+:root{
+  /* The template is uniformly square-cornered and shadowless. */
+  --radius-none:0;
+  --radius-sm:2px;      /* only for web UI affordances, never on slides */
+
+  --border-width-hairline:1px;
+  --rule-height:6px;    /* the red Contelos rule, 3.6pt */
+  --rule-height-thin:3px;
+
+  --border-card:1px solid var(--blue-100);
+  --border-divider:1px solid var(--blue-100);
+
+  --shadow-none:none;
+  --shadow-ui:0 1px 2px rgba(0,0,0,.08);   /* web UI only */
+  --shadow-overlay:0 8px 24px rgba(0,36,106,.16);
+}

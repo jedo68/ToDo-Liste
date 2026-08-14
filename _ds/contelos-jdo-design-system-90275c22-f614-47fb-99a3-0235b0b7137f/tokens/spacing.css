@@ -1,0 +1,21 @@
+:root{
+  /* Derived from the template's EMU geometry at 1280x720 */
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:19px;   /* gutter between stat cards (0.15in) */
+  --space-6:24px;
+  --space-7:32px;
+  --space-8:38px;   /* slide side margin (0.3in) */
+  --space-9:48px;
+  --space-10:64px;
+
+  --slide-width:1280px;
+  --slide-height:720px;
+  --slide-margin-x:38px;
+  --slide-title-top:22px;
+  --slide-rule-top:100px;
+  --slide-body-top:145px;
+  --slide-content-width:1142px;
+}

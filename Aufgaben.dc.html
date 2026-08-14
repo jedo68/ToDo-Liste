@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<title>Meine Aufgaben — Contelos</title>
+<link rel="stylesheet" href="_ds/contelos-jdo-design-system-90275c22-f614-47fb-99a3-0235b0b7137f/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/contelos-jdo-design-system-90275c22-f614-47fb-99a3-0235b0b7137f/tokens/colors.css">
+<link rel="stylesheet" href="_ds/contelos-jdo-design-system-90275c22-f614-47fb-99a3-0235b0b7137f/tokens/typography.css">
+<link rel="stylesheet" href="_ds/contelos-jdo-design-system-90275c22-f614-47fb-99a3-0235b0b7137f/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/contelos-jdo-design-system-90275c22-f614-47fb-99a3-0235b0b7137f/tokens/borders.css">
+<link rel="stylesheet" href="_ds/contelos-jdo-design-system-90275c22-f614-47fb-99a3-0235b0b7137f/tokens/motion.css">
+<link rel="stylesheet" href="_ds/contelos-jdo-design-system-90275c22-f614-47fb-99a3-0235b0b7137f/tokens/base.css">
+<link rel="stylesheet" href="_ds/contelos-jdo-design-system-90275c22-f614-47fb-99a3-0235b0b7137f/styles.css">
+<script src="_ds/contelos-jdo-design-system-90275c22-f614-47fb-99a3-0235b0b7137f/_ds_bundle.js"></script>
+<style>
+  body{margin:0;background:var(--white);}
+  a{color:var(--blue-600);text-decoration:none;}
+  a:hover{color:var(--blue-800);text-decoration:underline;}
+  input,select,textarea,button{font-family:var(--font-body);}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--blue-700);outline-offset:2px;}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--white);font-family:var(--font-body);color:var(--text-body);">
+
+  <header style="border-bottom:1px solid var(--border-hairline);padding:28px 38px 0;">
+    <div style="max-width:1142px;margin:0 auto;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:32px;">
+        <div>
+          <div style="font-family:var(--font-body);font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--text-muted);line-height:1;">Persönliche Aufgabenverwaltung</div>
+          <h1 style="font-family:var(--font-display);font-size:56px;font-weight:400;line-height:1;color:var(--text-title);margin:14px 0 0;">{{ ownerName }}</h1>
+          <p style="font-family:var(--font-body);font-size:var(--text-md);color:var(--text-muted);line-height:1.3;margin:12px 0 0;max-width:640px;">{{ subline }}</p>
+        </div>
+        <div style="text-align:right;flex-shrink:0;padding-top:6px;">
+          <div style="font-family:var(--font-display);font-size:var(--text-xl);color:var(--text-title);line-height:1;">{{ todayLabel }}</div>
+          <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:8px;line-height:1;">Speicherort&nbsp;&nbsp;•&nbsp;&nbsp;{{ storageLabel }}</div>
+        </div>
+      </div>
+      <div style="height:6px;background:var(--accent-rule);width:120px;margin-top:26px;"></div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-hairline);border:1px solid var(--border-hairline);margin-top:26px;">
+        <div style="background:var(--blue-50);padding:18px 20px;">
+          <div style="font-family:var(--font-display);font-size:var(--text-lg);color:var(--blue-700);line-height:1;">{{ stats.open }}</div>
+          <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:8px;line-height:1;">Offene Aufgaben</div>
+        </div>
+        <div style="background:var(--blue-50);padding:18px 20px;">
+          <div style="font-family:var(--font-display);font-size:var(--text-lg);color:var(--blue-700);line-height:1;">{{ stats.today }}</div>
+          <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:8px;line-height:1;">Heute fällig</div>
+        </div>
+        <div style="background:var(--blue-50);padding:18px 20px;">
+          <div style="font-family:var(--font-display);font-size:var(--text-lg);color:var(--red-600);line-height:1;">{{ stats.overdue }}</div>
+          <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:8px;line-height:1;">Überfällig</div>
+        </div>
+        <div style="background:var(--blue-50);padding:18px 20px;">
+          <div style="font-family:var(--font-display);font-size:var(--text-lg);color:var(--red-600);line-height:1;">{{ stats.important }}</div>
+          <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:8px;line-height:1;">Wichtig &amp; offen</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:0;margin-top:26px;">
+        <button onClick="{{ setFilterAll }}" style="appearance:none;border:1px solid var(--border-hairline);border-right:none;background:var(--white);color:var(--text-body);font-size:var(--text-base);padding:10px 20px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Alle</button>
+        <button onClick="{{ setFilterOpen }}" style="appearance:none;border:1px solid var(--border-hairline);border-right:none;background:var(--white);color:var(--text-body);font-size:var(--text-base);padding:10px 20px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Offen</button>
+        <button onClick="{{ setFilterImportant }}" style="appearance:none;border:1px solid var(--border-hairline);border-right:none;background:var(--white);color:var(--text-body);font-size:var(--text-base);padding:10px 20px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Wichtig</button>
+        <button onClick="{{ setFilterDone }}" style="appearance:none;border:1px solid var(--border-hairline);background:var(--white);color:var(--text-body);font-size:var(--text-base);padding:10px 20px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Erledigt</button>
+        <div style="flex:1;"></div>
+        <div style="align-self:center;font-size:var(--text-xs);color:var(--text-muted);line-height:1;">Ansicht: {{ filterLabel }} — {{ visibleCount }} Einträge</div>
+      </div>
+      <div style="height:0;padding-bottom:22px;"></div>
+    </div>
+  </header>
+
+  <main style="max-width:1142px;margin:0 auto;padding:34px 38px 80px;">
+
+    <section style="border:1px solid var(--border-hairline);background:var(--blue-50);padding:20px 24px;">
+      <div style="font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--text-muted);line-height:1;margin-bottom:14px;">Neue Aufgabe</div>
+      <div style="display:grid;grid-template-columns:1fr 170px 150px auto;gap:12px;align-items:center;">
+        <input value="{{ draftTitle }}" onChange="{{ onDraftTitle }}" onKeyDown="{{ onDraftKey }}" placeholder="Was ist zu tun?" style="border:1px solid var(--border-hairline);background:var(--white);padding:11px 14px;font-size:var(--text-base);color:var(--text-body);line-height:1.2;">
+        <input type="date" value="{{ draftDate }}" onChange="{{ onDraftDate }}" style="border:1px solid var(--border-hairline);background:var(--white);padding:10px 14px;font-size:var(--text-base);color:var(--text-body);line-height:1.2;">
+        <select value="{{ draftCategory }}" onChange="{{ onDraftCategory }}" style="border:1px solid var(--border-hairline);background:var(--white);padding:11px 12px;font-size:var(--text-base);color:var(--text-body);line-height:1.2;">
+          <option value="Privat">Privat</option>
+          <option value="Arbeit">Arbeit</option>
+          <option value="Projekt">Projekt</option>
+          <option value="Termin">Termin</option>
+        </select>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:var(--text-base);color:var(--text-body);cursor:pointer;line-height:1;">
+            <input type="checkbox" checked="{{ draftImportant }}" onChange="{{ onDraftImportant }}" style="width:16px;height:16px;accent-color:var(--red-600);cursor:pointer;">
+            Wichtig
+          </label>
+          <button onClick="{{ addTask }}" style="appearance:none;border:none;background:var(--action-primary);color:var(--white);font-size:var(--text-base);padding:12px 24px;cursor:pointer;line-height:1;" style-hover="background:var(--action-primary-hover);">Hinzufügen</button>
+        </div>
+      </div>
+    </section>
+
+    <div style="display:grid;grid-template-columns:34px 1fr 150px 110px 120px 84px;gap:16px;align-items:center;padding:0 8px 10px;margin-top:38px;font-size:var(--text-xs);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--text-muted);line-height:1;">
+      <div></div><div>Aufgabe</div><div>Fällig am</div><div>Kategorie</div><div>Priorität</div><div style="text-align:right;">Aktion</div>
+    </div>
+    <div style="height:1px;background:var(--border-hairline);"></div>
+
+    <sc-for list="{{ tasks }}" as="task" hint-placeholder-count="5">
+      <div style="display:grid;grid-template-columns:34px 1fr 150px 110px 120px 84px;gap:16px;align-items:center;padding:16px 8px;border-bottom:1px solid var(--border-hairline);background:{{ task.rowBg }};">
+        <div style="display:flex;align-items:center;">
+          <input type="checkbox" checked="{{ task.done }}" onChange="{{ task.toggle }}" style="width:18px;height:18px;accent-color:var(--blue-700);cursor:pointer;">
+        </div>
+        <div style="min-width:0;">
+          <div style="font-size:19px;line-height:1.25;color:{{ task.titleColor }};text-decoration:{{ task.titleDecoration }};text-wrap:pretty;">{{ task.title }}</div>
+          <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:6px;line-height:1;">{{ task.note }}</div>
+        </div>
+        <div style="font-size:var(--text-base);color:{{ task.dateColor }};line-height:1.2;">
+          {{ task.dateLabel }}
+          <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:5px;line-height:1;">{{ task.relLabel }}</div>
+        </div>
+        <div style="font-size:var(--text-xs);color:var(--text-muted);line-height:1;">{{ task.category }}</div>
+        <div>
+          <span style="display:inline-block;font-size:var(--text-xs);line-height:1;padding:6px 10px;border:1px solid {{ task.badgeBorder }};color:{{ task.badgeColor }};background:var(--white);">{{ task.priorityLabel }}</span>
+        </div>
+        <div style="text-align:right;display:flex;gap:14px;justify-content:flex-end;">
+          <button onClick="{{ task.star }}" title="Wichtig markieren" style="appearance:none;border:none;background:none;cursor:pointer;font-size:var(--text-base);line-height:1;padding:4px;color:{{ task.starColor }};">◆</button>
+          <button onClick="{{ task.remove }}" title="Löschen" style="appearance:none;border:none;background:none;cursor:pointer;font-size:var(--text-base);line-height:1;padding:4px;color:var(--text-muted);" style-hover="color:var(--red-600);">✕</button>
+        </div>
+      </div>
+    </sc-for>
+
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:56px 8px;text-align:center;font-size:var(--text-md);color:var(--text-muted);line-height:1.3;">Keine Aufgaben in dieser Ansicht.</div>
+    </sc-if>
+
+    <section style="margin-top:48px;border-top:3px solid var(--border-hairline);padding-top:24px;display:flex;align-items:flex-start;justify-content:space-between;gap:40px;">
+      <div style="max-width:640px;">
+        <div style="font-family:var(--font-display);font-size:var(--text-xl);color:var(--text-title);line-height:1;">Datenhaltung</div>
+        <p style="font-size:var(--text-base);color:var(--text-muted);line-height:1.45;margin:12px 0 0;">Alle Einträge liegen als <strong style="font-weight:500;color:var(--text-body);">JSON</strong> vor — strukturiert, versionierbar und in jedem Editor lesbar. Sie werden automatisch lokal im Browser gesichert; über „Datei exportieren" schreiben Sie den aktuellen Stand als <em>aufgaben.json</em> auf Ihre Festplatte, über „Datei laden" holen Sie ihn zurück. Kein Server, kein Konto.</p>
+        <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:14px;line-height:1;">Letzte lokale Sicherung: {{ savedLabel }}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
+        <button onClick="{{ exportJson }}" style="appearance:none;border:none;background:var(--action-primary);color:var(--white);font-size:var(--text-base);padding:12px 24px;cursor:pointer;line-height:1;" style-hover="background:var(--action-primary-hover);">Datei exportieren</button>
+        <button onClick="{{ importJson }}" style="appearance:none;border:1px solid var(--action-primary);background:var(--white);color:var(--action-primary);font-size:var(--text-base);padding:11px 24px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Datei laden</button>
+        <button onClick="{{ resetDemo }}" style="appearance:none;border:none;background:none;color:var(--text-muted);font-size:var(--text-xs);padding:6px 0;cursor:pointer;line-height:1;text-align:right;" style-hover="color:var(--red-600);">Testdaten zurücksetzen</button>
+      </div>
+    </section>
+
+    <div style="margin-top:46px;height:3px;background:var(--border-hairline);"></div>
+    <div style="margin-top:8px;font-size:var(--text-xs);color:var(--text-body);line-height:1;">Persönliche Aufgabenliste&nbsp;&nbsp;|&nbsp;&nbsp;lokal gespeichert&nbsp;&nbsp;|&nbsp;&nbsp;JSON&nbsp;&nbsp;|&nbsp;&nbsp;{{ todayLabel }}</div>
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ownerName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Guten Tag, Jens&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;subline&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Alles, was ansteht — nach Fälligkeit sortiert, Wichtiges in Rot.&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const KEY = 'contelos.todos.v1';
+
+const DEMO = [
+  { id: 't1', title: 'Angebot Revit-Schulung final prüfen', note: 'Preisstaffel und Termine gegenlesen', date: '2026-08-05', category: 'Arbeit', important: true, done: false },
+  { id: 't2', title: 'Zahnarzttermin bestätigen', note: 'Rückruf bis 12 Uhr', date: '2026-08-07', category: 'Termin', important: false, done: false },
+  { id: 't3', title: 'Backup der Projektdaten anlegen', note: 'Externe Platte, Ordner 2026', date: '2026-08-07', category: 'Privat', important: true, done: false },
+  { id: 't4', title: 'Punktwolke für Halle 3 importieren', note: 'Recap-Datei von Vermessung', date: '2026-08-10', category: 'Projekt', important: false, done: false },
+  { id: 't5', title: 'Steuerunterlagen sortieren', note: 'Belege Q2', date: '2026-08-14', category: 'Privat', important: false, done: false },
+  { id: 't6', title: 'Lizenzverlängerung anstoßen', note: 'Läuft zum Quartalsende aus', date: '2026-09-01', category: 'Arbeit', important: true, done: false },
+  { id: 't7', title: 'Fahrrad zur Inspektion bringen', note: '', date: '2026-08-03', category: 'Privat', important: false, done: true }
+];
+
+const DE_DATE = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'short', year: 'numeric' });
+const DE_LONG = new Intl.DateTimeFormat('de-DE', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+
+function startOfDay(d) { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; }
+
+class Component extends DCLogic {
+  state = {
+    tasks: DEMO,
+    filter: 'open',
+    draft: { title: '', date: '', category: 'Privat', important: false },
+    saved: null
+  };
+
+  componentDidMount() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (raw) {
+        const data = JSON.parse(raw);
+        if (Array.isArray(data.tasks)) this.setState({ tasks: data.tasks, saved: data.savedAt || null });
+      }
+    } catch (e) { /* ignore corrupt store */ }
+  }
+
+  persist(tasks) {
+    const savedAt = new Date().toISOString();
+    this.setState({ tasks, saved: savedAt });
+    try { localStorage.setItem(KEY, JSON.stringify({ version: 1, savedAt, tasks })); } catch (e) {}
+  }
+
+  renderVals() {
+    const today = startOfDay(new Date());
+    const d = this.state.draft;
+    const all = this.state.tasks;
+    const filter = this.state.filter;
+
+    const filtered = all.filter(t =>
+      filter === 'all' ? true :
+      filter === 'open' ? !t.done :
+      filter === 'important' ? (t.important && !t.done) : t.done
+    );
+
+    const sorted = filtered.slice().sort((a, b) => {
+      if (a.done !== b.done) return a.done ? 1 : -1;
+      const da = a.date || '9999-12-31', db = b.date || '9999-12-31';
+      if (da !== db) return da < db ? -1 : 1;
+      if (a.important !== b.important) return a.important ? -1 : 1;
+      return a.title.localeCompare(b.title, 'de');
+    });
+
+    const tasks = sorted.map(t => {
+      const due = t.date ? startOfDay(t.date) : null;
+      const days = due ? Math.round((due - today) / 86400000) : null;
+      const overdue = !t.done && days !== null && days < 0;
+      const isToday = days === 0;
+      const hot = !t.done && (t.important || overdue);
+      const rel = days === null ? '' :
+        t.done ? 'abgeschlossen' :
+        days < -1 ? Math.abs(days) + ' Tage überfällig' :
+        days === -1 ? 'gestern fällig' :
+        days === 0 ? 'heute' :
+        days === 1 ? 'morgen' : 'in ' + days + ' Tagen';
+      return {
+        ...t,
+        note: t.note || '—',
+        dateLabel: t.date ? DE_DATE.format(due) : 'ohne Datum',
+        relLabel: rel,
+        rowBg: t.done ? 'var(--grey-100)' : (hot ? '#FFF5F5' : 'var(--white)'),
+        titleColor: t.done ? 'var(--text-muted)' : (hot ? 'var(--red-600)' : 'var(--text-body)'),
+        titleDecoration: t.done ? 'line-through' : 'none',
+        dateColor: overdue ? 'var(--red-600)' : 'var(--text-body)',
+        priorityLabel: t.done ? 'Erledigt' : overdue ? 'Überfällig' : t.important ? 'Wichtig' : isToday ? 'Heute' : 'Normal',
+        badgeColor: t.done ? 'var(--text-muted)' : hot ? 'var(--red-600)' : 'var(--text-muted)',
+        badgeBorder: hot && !t.done ? 'var(--red-600)' : 'var(--border-hairline)',
+        starColor: t.important ? 'var(--red-600)' : 'var(--grey-300)',
+        toggle: () => this.persist(all.map(x => x.id === t.id ? { ...x, done: !x.done } : x)),
+        star: () => this.persist(all.map(x => x.id === t.id ? { ...x, important: !x.important } : x)),
+        remove: () => this.persist(all.filter(x => x.id !== t.id))
+      };
+    });
+
+    const openTasks = all.filter(t => !t.done);
+    const stats = {
+      open: openTasks.length,
+      today: openTasks.filter(t => t.date && startOfDay(t.date) - today === 0).length,
+      overdue: openTasks.filter(t => t.date && startOfDay(t.date) - today < 0).length,
+      important: openTasks.filter(t => t.important).length
+    };
+
+    const setDraft = patch => this.setState(s => ({ draft: { ...s.draft, ...patch } }));
+    const add = () => {
+      const title = d.title.trim();
+      if (!title) return;
+      this.persist(all.concat([{
+        id: 'u' + Date.now(),
+        title,
+        note: '',
+        date: d.date || new Date().toISOString().slice(0, 10),
+        category: d.category,
+        important: d.important,
+        done: false
+      }]));
+      this.setState({ draft: { title: '', date: '', category: d.category, important: false } });
+    };
+
+    const labels = { all: 'Alle', open: 'Offen', important: 'Wichtig', done: 'Erledigt' };
+
+    return {
+      ownerName: this.props.ownerName ?? 'Guten Tag, Jens',
+      subline: this.props.subline ?? 'Alles, was ansteht — nach Fälligkeit sortiert, Wichtiges in Rot.',
+      todayLabel: DE_LONG.format(today),
+      storageLabel: 'aufgaben.json (lokal)',
+      tasks,
+      stats,
+      isEmpty: tasks.length === 0,
+      visibleCount: tasks.length,
+      filterLabel: labels[filter],
+      draftTitle: d.title,
+      draftDate: d.date,
+      draftCategory: d.category,
+      draftImportant: d.important,
+      savedLabel: this.state.saved ? new Date(this.state.saved).toLocaleString('de-DE') : 'noch nicht gesichert (Testdaten)',
+      onDraftTitle: e => setDraft({ title: e.target.value }),
+      onDraftDate: e => setDraft({ date: e.target.value }),
+      onDraftCategory: e => setDraft({ category: e.target.value }),
+      onDraftImportant: e => setDraft({ important: e.target.checked }),
+      onDraftKey: e => { if (e.key === 'Enter') add(); },
+      addTask: add,
+      setFilterAll: () => this.setState({ filter: 'all' }),
+      setFilterOpen: () => this.setState({ filter: 'open' }),
+      setFilterImportant: () => this.setState({ filter: 'important' }),
+      setFilterDone: () => this.setState({ filter: 'done' }),
+      resetDemo: () => this.persist(DEMO),
+      exportJson: () => {
+        const blob = new Blob([JSON.stringify({ version: 1, savedAt: new Date().toISOString(), tasks: all }, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'aufgaben.json';
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+      },
+      importJson: () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'application/json,.json';
+        input.onchange = () => {
+          const file = input.files && input.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = () => {
+            try {
+              const data = JSON.parse(String(reader.result));
+              if (Array.isArray(data.tasks)) this.persist(data.tasks);
+            } catch (e) {}
+          };
+          reader.readAsText(file);
+        };
+        input.click();
+      }
+    };
+  }
+}
+
+</script>
+</body>
+</html>
