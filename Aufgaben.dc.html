@@ -65,10 +65,10 @@
       </div>
 
       <div style="display:flex;gap:0;margin-top:26px;">
-        <button onClick="{{ setFilterAll }}" style="appearance:none;border:1px solid var(--border-hairline);border-right:none;background:var(--white);color:var(--text-body);font-size:var(--text-base);padding:10px 20px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Alle</button>
-        <button onClick="{{ setFilterOpen }}" style="appearance:none;border:1px solid var(--border-hairline);border-right:none;background:var(--white);color:var(--text-body);font-size:var(--text-base);padding:10px 20px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Offen</button>
-        <button onClick="{{ setFilterImportant }}" style="appearance:none;border:1px solid var(--border-hairline);border-right:none;background:var(--white);color:var(--text-body);font-size:var(--text-base);padding:10px 20px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Wichtig</button>
-        <button onClick="{{ setFilterDone }}" style="appearance:none;border:1px solid var(--border-hairline);background:var(--white);color:var(--text-body);font-size:var(--text-base);padding:10px 20px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Erledigt</button>
+        <button onClick="{{ setFilterAll }}" style="appearance:none;border:1px solid {{ filterButtons.all.border }};border-right:none;background:var(--white);color:{{ filterButtons.all.color }};font-weight:{{ filterButtons.all.weight }};font-size:var(--text-base);padding:10px 20px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Alle</button>
+        <button onClick="{{ setFilterOpen }}" style="appearance:none;border:1px solid {{ filterButtons.open.border }};border-right:none;background:var(--white);color:{{ filterButtons.open.color }};font-weight:{{ filterButtons.open.weight }};font-size:var(--text-base);padding:10px 20px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Offen</button>
+        <button onClick="{{ setFilterImportant }}" style="appearance:none;border:1px solid {{ filterButtons.important.border }};border-right:none;background:var(--white);color:{{ filterButtons.important.color }};font-weight:{{ filterButtons.important.weight }};font-size:var(--text-base);padding:10px 20px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Wichtig</button>
+        <button onClick="{{ setFilterDone }}" style="appearance:none;border:1px solid {{ filterButtons.done.border }};background:var(--white);color:{{ filterButtons.done.color }};font-weight:{{ filterButtons.done.weight }};font-size:var(--text-base);padding:10px 20px;cursor:pointer;line-height:1;" style-hover="background:var(--blue-50);">Erledigt</button>
         <div style="flex:1;"></div>
         <div style="align-self:center;font-size:var(--text-xs);color:var(--text-muted);line-height:1;">Ansicht: {{ filterLabel }} — {{ visibleCount }} Einträge</div>
       </div>
@@ -269,6 +269,15 @@ class Component extends DCLogic {
     };
 
     const labels = { all: 'Alle', open: 'Offen', important: 'Wichtig', done: 'Erledigt' };
+    const filterButtons = {};
+    for (const key of Object.keys(labels)) {
+      const active = filter === key;
+      filterButtons[key] = {
+        color: active ? 'var(--red-600)' : 'var(--text-body)',
+        border: active ? 'var(--red-600)' : 'var(--border-hairline)',
+        weight: active ? 'var(--weight-medium)' : 'var(--weight-regular)'
+      };
+    }
 
     return {
       ownerName: this.props.ownerName ?? 'Guten Tag, Jens',
@@ -279,6 +288,7 @@ class Component extends DCLogic {
       stats,
       isEmpty: tasks.length === 0,
       visibleCount: tasks.length,
+      filterButtons,
       filterLabel: labels[filter],
       draftTitle: d.title,
       draftDate: d.date,
